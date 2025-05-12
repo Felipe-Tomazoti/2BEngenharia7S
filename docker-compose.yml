@@ -1,0 +1,36 @@
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: product
+      POSTGRES_USER: 123
+      POSTGRES_PASSWORD: 123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  projeto2b:
+    container_name: projeto2b
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      JWT_SECRET: my-secret-key
+    networks:
+      - springnet
+
+volumes:
+  pgdata:
+
+networks:
+  springnet:
+    driver: bridge
