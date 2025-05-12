@@ -20,6 +20,10 @@ public class Product {
         this.name = data.name();
     }
 
+    public Product() {
+
+    }
+
     public String getId() {
         return id;
     }
