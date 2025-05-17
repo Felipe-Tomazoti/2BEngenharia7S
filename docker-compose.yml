@@ -24,12 +24,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
       JWT_SECRET: my-secret-key
-    networks:
-      - springnet
 
 volumes:
   pgdata:
 
-networks:
-  springnet:
-    driver: bridge
