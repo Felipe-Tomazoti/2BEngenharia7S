@@ -3,6 +3,7 @@ package com.example.projeto2B.domain.user;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -17,6 +18,7 @@ public class User implements UserDetails {
     private String id;
     private String login;
     private String password;
+    private UserRole role;
 
     public User() {
     }
@@ -26,9 +28,17 @@ public class User implements UserDetails {
         this.password = encryptedPassword;
     }
 
+
+    public User(String login, String encryptedPassword, UserRole role) {
+        this.login = login;
+        this.password = encryptedPassword;
+        this.role = role;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        if (this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
@@ -79,5 +89,13 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }

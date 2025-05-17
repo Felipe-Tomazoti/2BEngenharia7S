@@ -1,4 +1,4 @@
 package com.example.projeto2B.domain.user;
 
-public record AuthenticationDTO(String login, String password) {
+public record AuthenticationDTO(String login, String password, UserRole role) {
 }
